@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import { Aes } from "../aes/aes.js"
-import { cbc } from "../aes/cbc.js"
+import { Aes } from "/js/lib/aes/aes.js"
+import { cbc } from "/js/lib/aes/cbc.js"
 import {
     addRoundKey,
     subBytes,
@@ -14,7 +14,7 @@ import {
     inverseShiftRows,
     mixColumns,
     inverseMixColumns
-} from "../aes/core.js"
+} from "/js/lib/aes/core.js"
 
 export class AnimatedAes extends Aes {
 
