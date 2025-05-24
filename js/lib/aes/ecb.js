@@ -6,17 +6,18 @@
 
 import { size } from "./core.js"
 
-export const ecb = { input: ecbInput, output: ecbOutput }
+class ECB {
+    async input(data, key, iv, encrypt) {
+        for (let i = 0; i < data.length / size; i++) {
+            await encrypt(data, key, i / size)
+        }
+    }
 
-export function* ecbInput(bytes, iv) {
-    for (let i = 0; i < bytes.length / size; i++) {
-        yield
+    async output(data, key, iv, decrypt) {
+        for (let i = 0; i < data.length / size; i++) {
+            await decrypt(data, key, i / size)
+        }
     }
 }
 
-export function* ecbOutput(bytes, iv) {
-    yield
-    for (let i = 0; i < bytes.length / size; i++) {
-        yield
-    }
-}
+export const ecb = new ECB()

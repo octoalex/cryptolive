@@ -22,8 +22,8 @@ export class Aes {
 
     #encoder = new TextEncoder()
     #decoder = new TextDecoder()
-    #modeInput
-    #modeOutput
+
+    #mode
 
     #addRoundKey
     #subBytes
@@ -36,8 +36,7 @@ export class Aes {
     constructor(
         mode = cbc
     ) {
-        this.#modeInput = mode.input
-        this.#modeOutput = mode.output
+        this.#mode = mode
 
         this._protectedSetSteps(
             this,
@@ -57,12 +56,7 @@ export class Aes {
         const bytes = [...this.#encoder.encode(message)]
         pad(bytes)
 
-        const mode = this.#modeInput(bytes, iv)
-
-        for (let i = 0; i < bytes.length; i += size) {
-            mode.next()
-            this.#encryptBlock(bytes, roundKeys, i / size)
-        }
+        await this.#mode.input(bytes, roundKeys, iv, (data, key, offset) => this.#encryptBlock(data, key, offset))
 
         return btoa(bytes.map(x => String.fromCharCode(x)).join(""))
     }
@@ -81,19 +75,14 @@ export class Aes {
             }
         }
 
-        const mode = this.#modeOutput(bytes, iv)
-        for (let i = 0; i < bytes.length; i += size) {
-            mode.next()
-            this.#decryptBlock(bytes, roundKeys, i / size)
-        }
-        mode.next()
+        await this.#mode.output(bytes, roundKeys, iv, (data, key, offset) => this.#decryptBlock(data, key, offset))
 
         unpad(bytes)
 
         return this.#decoder.decode(new Uint8Array(bytes))
     }
 
-    async #encryptBlock(state, roundKeys, offset, steps) {
+    async #encryptBlock(state, roundKeys, offset) {
         // the algorithm operates in DWORDs, while this works in bytes,
         // so some conversion trickery is necessary
         await this.#addRoundKey(state, roundKeys, offset, 0)

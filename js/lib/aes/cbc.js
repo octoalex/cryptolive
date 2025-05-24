@@ -6,30 +6,26 @@
 
 import { size } from "./core.js"
 
-export const cbc = { input: cbcInput, output: cbcOutput }
-
-function* cbcInput(bytes, iv) {
-    xor(bytes, iv, 0, 0)
-    yield
-
-    for (let i = size; i < bytes.length; i += size) {
-        xor(bytes, bytes, i, i - size)
-        yield
-    }
-}
-
-function* cbcOutput(bytes, iv) {
-    const previous = new Array(size).fill(0)
-    const active = iv.slice()
-    for (let i = 0; i < bytes.length; i += size) {
-        for (let j = 0; j < size; j++) {
-            previous[j] = active[j]
-            active[j] = bytes[i + j]
+class CBC {
+    async input(data, key, iv, encrypt) {
+        for (let i = 0; i < data.length; i += size) {
+            xor(data, i === 0 ? iv : data, i, Math.max(i - size, 0))
+            await encrypt(data, key, i / size)
         }
-        yield
-        xor(bytes, previous, i, 0)
     }
-    yield
+
+    async output(data, key, iv, decrypt) {
+        const previous = new Array(size).fill(0)
+        const active = iv.slice()
+        for (let i = 0; i < data.length; i += size) {
+            for (let j = 0; j < size; j++) {
+                previous[j] = active[j]
+                active[j] = data[i + j]
+            }
+            await decrypt(data, key, i / size)
+            xor(data, previous, i, 0)
+        }
+    }
 }
 
 function xor(a, b, aOffset, bOffset) {
@@ -37,3 +33,5 @@ function xor(a, b, aOffset, bOffset) {
         a[i + aOffset] ^= b[i + bOffset]
     }
 }
+
+export const cbc = new CBC()
