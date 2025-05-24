@@ -1,0 +1,46 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+tr {
+	position: relative;
+}
+
+table.main > tbody {
+	clip-path: inset(0 0 0 -2px);
+}
+
+#table-box {
+	display: flex;
+	/* display: flex;
+	flex-direction: row;
+	justify-content: center; */
+	width: 298px;
+	margin: auto;
+	position: relative;
+}
+
+table.borrow {
+	border: none;
+	padding: 0;
+	top: 8px;
+	position: absolute;
+	left: 288px;
+	width: 282px;
+}
+
+table.key {
+	position: absolute;
+	left: 306px;
+	width: 298px;
+}
+
+table.borrow > tbody {
+	clip-path: inset(0 278px 0px -282px);
+}
+
+.sbox-mini {
+	font-size: 10pt;
+}

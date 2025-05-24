@@ -1,0 +1,27 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+@keyframes addRoundKey-key {
+	0%, 100% { right: 0px; }
+	50% { right: 306px; }
+}
+
+@keyframes addRoundKey-text {
+	0%, 100% { opacity: 100%; }
+	50% { opacity: 0%; }
+}
+
+table.key.animate-addRoundKey > tbody > tr {
+	animation: addRoundKey-key 1s ease-in-out 1 forwards;
+}
+
+table.main.animate-addRoundKey > tbody > tr > td > span {
+	animation: addRoundKey-text 1s ease-in-out 1 forwards;
+}
+
+table.animate-setRoundKey > tbody > tr > td > span {
+	animation: addRoundKey-text 1s ease-in-out 1 forwards;
+}
