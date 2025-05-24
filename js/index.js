@@ -4,19 +4,21 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import {AnimatedAes} from "./lib/animated_aes/aes.js";
+import {AnimatedAes} from "/js/lib/animated_aes/animatedAes.js";
 import { Animator } from "/js/lib/anim/animator.js"
 import {
     animateMixColumns,
     animateShiftRows,
     animateSubBytes,
-    animateAddRoundKey
+    animateAddRoundKey,
+    animateCbcInput
 } from "./setAnimations.js"
 import {
     tablesBox,
     createTable,
     setTable, Tables,
 } from "./tables.js";
+import { AnimatedCBC } from "/js/lib/animated_aes/animatedCbc.js"
 
 window["run"] = run
 window["test_animate"] = test_animate
@@ -41,6 +43,10 @@ const animator = new Animator(
     {
         name: "addRoundKey",
         callback: animateAddRoundKey,
+        timeout: timeout * 2
+    }, {
+        name: "cbcInput",
+        callback: animateCbcInput,
         timeout: timeout * 2
     }
 )
@@ -75,6 +81,7 @@ async function run() {
 }
 
 function test_animate() {
-    const algo = new AnimatedAes(animator)
-    algo.encrypt("hello", "hello", bytes)
+    const cbc = new AnimatedCBC(animator)
+    const algo = new AnimatedAes(animator, cbc)
+    algo.encrypt("mmwah~", "hello", bytes)
 }

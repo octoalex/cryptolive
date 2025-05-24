@@ -4,13 +4,14 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import {tablesBox, setTable, setTableWithString, setTableBy, Tables} from "./tables.js";
+import {setTable, setTableBy, Tables} from "./tables.js";
 
 export {
 	animateMixColumns,
 	animateShiftRows,
 	animateSubBytes,
-	animateAddRoundKey
+	animateAddRoundKey,
+	animateCbcInput
 }
 
 function animateMixColumns(state, offset) {
@@ -88,6 +89,26 @@ function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 	}, 1500)
 	setTimeout(() => {
 		Tables.key.classList.remove(name)
+		Tables.main.classList.remove(name)
+	}, 2000)
+}
+
+function animateCbcInput(data, active, offset) {
+	const name = "animate-cbcInput"
+	Tables.main.classList.add(name)
+	const decoded = new TextDecoder().decode(new Uint8Array(active))
+	// 0500: set new text
+	// 1500: set data
+	setTimeout(() => {
+		setTableBy(Tables.main, (i, j, element) => {
+			const index = j * 4 + i
+			element.textContent = active[index] <= 16 ? active[index].toString(16).padStart(2, "0") : decoded[index]
+		})
+	}, 500)
+	setTimeout(() => {
+		setTable(Tables.main, data, offset)
+	}, 1500)
+	setTimeout(() => {
 		Tables.main.classList.remove(name)
 	}, 2000)
 }

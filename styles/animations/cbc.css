@@ -1,0 +1,12 @@
+@keyframes cbc {
+	0%, 50%, 100% {
+		opacity: 100%;
+	}
+	25%, 75% {
+		opacity: 0%;
+	}
+}
+
+table.animate-cbcInput > tbody > tr > td > span {
+	animation: cbc 2s ease-in-out 1 forwards;
+}
