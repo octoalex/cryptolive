@@ -14,8 +14,11 @@ export {
 	animateCbcInput
 }
 
+const stepName = document.getElementById("step-name")
+
 function animateMixColumns(state, offset) {
 	const name = "animate-mixColumns"
+	stepName.textContent = "Mix Columns"
 	Tables.main.classList.add(name)
 	setTimeout(
 		() => {
@@ -31,6 +34,7 @@ function animateMixColumns(state, offset) {
 
 function animateShiftRows(state, offset) {
 	const name = "animate-shiftRows"
+	stepName.textContent = "Shift Rows"
 	Tables.main.classList.add(name)
 	Tables.borrow.classList.add(name)
 	setTimeout(
@@ -44,6 +48,7 @@ function animateShiftRows(state, offset) {
 
 function animateSubBytes(state, offset) {
 	const name = "animate-subBytes"
+	stepName.textContent = "Sub Bytes"
 	Tables.main.classList.add(name)
 	setTimeout(
 		() => {
@@ -71,7 +76,8 @@ function animateSubBytes(state, offset) {
 
 function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 	const name = "animate-addRoundKey"
-	const set = "animate-setRoundKey"
+	const set = "animate-updateRoundKey"
+	stepName.textContent = "Update Round Key"
 	// first, set the new round key
 	Tables.key.classList.add(set)
 	setTimeout(
@@ -83,6 +89,7 @@ function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 		Tables.key.classList.remove(set)
 		Tables.key.classList.add(name)
 		Tables.main.classList.add(name)
+		stepName.textContent = "Add Round Key"
 	}, 1000)
 	setTimeout(() => {
 		setTable(Tables.main, state, offset)
@@ -95,6 +102,7 @@ function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 
 function animateCbcInput(data, active, offset) {
 	const name = "animate-cbcInput"
+	stepName.textContent = "CBC Encrypt Next Block"
 	Tables.main.classList.add(name)
 	const decoded = new TextDecoder().decode(new Uint8Array(active))
 	// 0500: set new text

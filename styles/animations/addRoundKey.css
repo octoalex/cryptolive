@@ -22,6 +22,6 @@ table.main.animate-addRoundKey > tbody > tr > td > span {
 	animation: addRoundKey-text 1s ease-in-out 1 forwards;
 }
 
-table.animate-setRoundKey > tbody > tr > td > span {
+table.animate-updateRoundKey > tbody > tr > td > span {
 	animation: addRoundKey-text 1s ease-in-out 1 forwards;
 }

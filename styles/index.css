@@ -14,9 +14,6 @@ table.main > tbody {
 
 #table-box {
 	display: flex;
-	/* display: flex;
-	flex-direction: row;
-	justify-content: center; */
 	width: 298px;
 	margin: auto;
 	position: relative;
@@ -43,4 +40,20 @@ table.borrow > tbody {
 
 .sbox-mini {
 	font-size: 10pt;
+}
+
+.step {
+	margin: auto;
+	width: 298px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.step > p {
+	display: inline;
+	margin-top: 8px;
+}
+
+p#step-name {
+	text-align: left;
 }
