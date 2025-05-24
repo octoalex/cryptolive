@@ -10,6 +10,7 @@ export {
     setTable,
     setTableWithString,
     setTableBy,
+    resetTable,
     Tables
 }
 
@@ -72,6 +73,19 @@ function setTableBy(table, provider) {
             const td = tr.children[j]
             const span = td.children[0]
             provider(i, j, span)
+        }
+    }
+}
+
+function resetTable(table) {
+    const tbody = table.querySelector("tbody")
+    // console.log("Table Set", table, data, offset)
+    for (let i = 0; i < 4; ++i) {
+        const tr = tbody.children[i]
+        for (let j = 0; j < 4; ++j) {
+            const td = tr.children[j]
+            const span = td.children[0]
+            span.textContent = "00"
         }
     }
 }

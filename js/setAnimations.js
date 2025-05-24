@@ -4,14 +4,16 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-import {setTable, setTableBy, Tables} from "./tables.js";
+import {setTable, setTableBy, Tables, tablesBox} from "./tables.js";
+import {size} from "/js/lib/aes/core.js";
 
 export {
 	animateMixColumns,
 	animateShiftRows,
 	animateSubBytes,
 	animateAddRoundKey,
-	animateCbcInput
+	animateCbcInput,
+	animateAppear
 }
 
 const stepName = document.getElementById("step-name")
@@ -22,7 +24,7 @@ function animateMixColumns(state, offset) {
 	Tables.main.classList.add(name)
 	setTimeout(
 		() => {
-			setTable(Tables.main, state, offset)
+			setTable(Tables.main, state, offset * size)
 		}, 500
 	)
 	setTimeout(
@@ -39,7 +41,7 @@ function animateShiftRows(state, offset) {
 	Tables.borrow.classList.add(name)
 	setTimeout(
 		() => {
-			setTable(Tables.main, state, offset)
+			setTable(Tables.main, state, offset * size)
 			Tables.main.classList.remove(name)
 			Tables.borrow.classList.remove(name)
 		}, 1000
@@ -64,9 +66,9 @@ function animateSubBytes(state, offset) {
 	)
 	setTimeout(
 		() => {
-			setTable(Tables.main, state, offset)
+			setTable(Tables.main, state, offset * size)
 			// subBytes is always and only the step preceding shiftRows, so the borrow table's data is set here
-			setTable(Tables.borrow, state, offset)
+			setTable(Tables.borrow, state, offset * size)
 		}, 750
 	)
 	setTimeout(() => {
@@ -82,7 +84,7 @@ function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 	Tables.key.classList.add(set)
 	setTimeout(
 		() => {
-			setTable(Tables.key, roundKeys, keyOffset)
+			setTable(Tables.key, roundKeys, keyOffset * size)
 		}, 500
 	)
 	setTimeout(() => {
@@ -92,12 +94,13 @@ function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 		stepName.textContent = "Add Round Key"
 	}, 1000)
 	setTimeout(() => {
-		setTable(Tables.main, state, offset)
+		setTable(Tables.main, state, offset * size)
 	}, 1500)
 	setTimeout(() => {
 		Tables.key.classList.remove(name)
 		Tables.main.classList.remove(name)
 	}, 2000)
+
 }
 
 function animateCbcInput(data, active, offset) {
@@ -119,4 +122,26 @@ function animateCbcInput(data, active, offset) {
 	setTimeout(() => {
 		Tables.main.classList.remove(name)
 	}, 2000)
+
+}
+
+function animateAppear() {
+	const name = "animate-appear"
+	const unappeared = "unappeared"
+	const labels = document.getElementById("labels")
+	const results = document.getElementById("results")
+
+	if (!tablesBox.classList.contains(unappeared)) return
+
+	tablesBox.classList.add(name)
+	labels.classList.add(name)
+	results.classList.add(name)
+	tablesBox.classList.remove(unappeared)
+	labels.classList.remove(unappeared)
+	results.classList.remove(unappeared)
+	setTimeout(() => {
+		tablesBox.classList.remove(name)
+		labels.classList.remove(name)
+		results.classList.remove(name)
+	}, 1000)
 }

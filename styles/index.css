@@ -42,18 +42,118 @@ table.borrow > tbody {
 	font-size: 10pt;
 }
 
-.step {
+.labels {
+	position: relative;
 	margin: auto;
+	width: 298px;
+}
+
+.step-label {
 	width: 298px;
 	display: flex;
 	justify-content: space-between;
 }
 
-.step > p {
+.step-label > p,
+.key-label > p,
+.results > p {
 	display: inline;
 	margin-top: 8px;
 }
 
 p#step-name {
 	text-align: left;
+}
+
+.key-label {
+	position: absolute;
+	width: 298px;
+	left: 330px;
+	top: 8px;
+	display: flex;
+}
+
+#key-name {
+	overflow-wrap: anywhere;
+	text-align: right;
+}
+
+.pseudoform {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.entry {
+	display: flex;
+	flex-direction: row;
+	width: 298px;
+	position: relative;
+}
+
+.entry > label {
+	position: absolute;
+	right: 306px;
+	white-space: nowrap;
+	height: 100%;
+	align-content: center;
+}
+
+.entry > *:not(label) {
+	width: 298px;
+	margin: 4px;
+}
+
+label {
+	text-align: right;
+}
+
+textarea {
+	font-size: 10pt;
+}
+
+#process,
+#calculate {
+	width: 150px;
+	margin: 16px;
+	padding: 8px;
+}
+
+button.random-iv {
+	position: absolute;
+	left: 306px;
+	height: 100%;
+	margin: 0;
+	width: 96px;
+}
+
+.results {
+	margin: auto;
+	width: 596px;
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	margin-top: 32px;
+}
+
+#output {
+	margin: auto;
+	font-size: 24pt;
+	overflow-wrap: anywhere;
+	width: 447px;
+	text-align: center;
+}
+
+.results > p:not(#output) {
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 0;
+	height: 100%;
+	align-content: center;
+}
+
+section.unappeared {
+	opacity: 0%;
 }

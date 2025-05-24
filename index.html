@@ -16,13 +16,52 @@
     <link rel="stylesheet" href="styles/animations/subBytes.css">
     <link rel="stylesheet" href="styles/animations/addRoundKey.css">
     <link rel="stylesheet" href="styles/animations/cbc.css">
+    <link rel="stylesheet" href="styles/animations/appear.css">
 </head>
-<body onload="run()">
-    <section id="table-box"></section>
-    <section class="step">
-        <p>Step:</p>
-        <p id="step-name"></p>
+<body onload="init()">
+
+    <section class="pseudoform">
+        <select name="process" id="process">
+            <option value="encrypt">Encrypt</option>
+            <option value="decrypt">Decrypt</option>
+        </select>
+        <div class="entry">
+            <label for="message">Message</label>
+            <textarea name="text" id="message"></textarea>
+        </div>
+        <div class="entry">
+            <label for="key">Key</label>
+            <input type="text" name="key" id="key">
+        </div>
+        <div class="entry">
+            <label for="mode">Mode</label>
+            <select name="mode" id="mode">
+                <option value="cbc">CBC</option>
+            </select>
+        </div>
+        <div class="entry">
+            <label for="iv">Initialization Vector</label>
+            <input type="text" name="iv" id="iv">
+            <button class="random-iv" onclick="generateRandomIv()">Random!</button>
+        </div>
+        <button id="calculate" onclick="calculate()">Animate!</button>
     </section>
-    <button onclick="test_animate()">Animate</button>
+    <section class="unappeared" id="table-box"></section>
+    <section class="labels unappeared" id="labels">
+        <div class="step-label">
+            <p>Step:</p>
+            <p id="step-name"></p>
+        </div>
+        <div class="key-label">
+            <p>Key:</p>
+            <p id="key-name"></p>
+        </div>
+    </section>
+    <section class="results unappeared" id="results">
+        <p>Output:</p>
+        <p id="output">
+            ?
+        </p>
+    </section>
 </body>
 </html>

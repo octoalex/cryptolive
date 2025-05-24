@@ -4,15 +4,11 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-@keyframes cbc {
-	0%, 50%, 100% {
-		opacity: 100%;
-	}
-	25%, 75% {
-		opacity: 0%;
-	}
+@keyframes appear {
+	0% { opacity: 0%; }
+	100% { opacity: 100%; }
 }
 
-table.animate-cbcInput > tbody > tr > td > span {
-	animation: cbc 2s ease-in-out 1 forwards;
+section.animate-appear {
+	animation: appear 1s ease-in-out 1 forwards;
 }
