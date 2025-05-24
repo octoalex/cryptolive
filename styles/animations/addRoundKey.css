@@ -6,7 +6,7 @@
 
 @keyframes addRoundKey-key {
 	0%, 100% { right: 0px; }
-	50% { right: 306px; }
+	50% { right: 330px; }
 }
 
 @keyframes addRoundKey-text {
