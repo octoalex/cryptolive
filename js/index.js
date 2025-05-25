@@ -27,6 +27,7 @@ import {
 import { AnimatedCBC } from "/js/lib/animated_aes/animatedCbc.js"
 import {sha256} from "./lib/sha/sha256.js";
 import {size} from "./lib/aes/core.js";
+import {AnimatedECB} from "./lib/animated_aes/animatedEcb.js";
 
 window["init"] = init
 window["calculate"] = calculate
@@ -111,7 +112,7 @@ async function calculate() {
 
     const aes = new AnimatedAes(animator,
         d === "cbc" ? new AnimatedCBC(animator) :
-            // d === "ecb" ? new AnimatedECB(animator) :
+            d === "ecb" ? new AnimatedECB(animator) :
                 undefined
         )
 
