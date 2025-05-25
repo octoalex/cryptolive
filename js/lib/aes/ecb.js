@@ -8,13 +8,13 @@ import { size } from "./core.js"
 
 class ECB {
     async input(data, key, iv, encrypt) {
-        for (let i = 0; i < data.length / size; i++) {
+        for (let i = 0; i < data.length; i += size) {
             await encrypt(data, key, i / size)
         }
     }
 
     async output(data, key, iv, decrypt) {
-        for (let i = 0; i < data.length / size; i++) {
+        for (let i = 0; i < data.length; i += size) {
             await decrypt(data, key, i / size)
         }
     }
