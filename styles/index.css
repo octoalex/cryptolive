@@ -133,7 +133,7 @@ button.random-iv {
 #output {
 	margin: auto;
 	font-size: 24pt;
-	overflow-wrap: anywhere;
+	word-break: break-all;
 	width: 447px;
 	text-align: center;
 }
