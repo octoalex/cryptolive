@@ -45,3 +45,15 @@ table.animate-shiftRows > tbody > tr.row-2 {
 table.animate-shiftRows > tbody > tr.row-3 {
 	animation: shiftRows-row-3 1s ease-in-out 1 forwards;
 }
+
+table.animate-inverseShiftRows > tbody > tr.row-1 {
+	animation: shiftRows-row-1 1s ease-in-out 1 reverse;
+}
+
+table.animate-inverseShiftRows > tbody > tr.row-2 {
+	animation: shiftRows-row-2 1s ease-in-out 1 reverse;
+}
+
+table.animate-inverseShiftRows > tbody > tr.row-3 {
+	animation: shiftRows-row-3 1s ease-in-out 1 reverse;
+}

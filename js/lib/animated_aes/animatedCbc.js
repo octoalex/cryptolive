@@ -36,7 +36,7 @@ export class AnimatedCBC {
             }
             await decrypt(data, key, i / size)
             xor(data, previous, i, 0)
-            await this.#animator.play("cbcOutput", data, active, i)
+            await this.#animator.play("cbcOutput", data, i)
         }
     }
 }

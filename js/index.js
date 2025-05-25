@@ -7,11 +7,15 @@
 import {AnimatedAes} from "/js/lib/animated_aes/animatedAes.js";
 import { Animator } from "/js/lib/anim/animator.js"
 import {
-    animateMixColumns,
-    animateShiftRows,
-    animateSubBytes,
     animateAddRoundKey,
+    animateSubBytes,
+    animateInverseSubBytes,
+    animateShiftRows,
+    animateInverseShiftRows,
+    animateMixColumns,
+    animateInverseMixColumns,
     animateCbcInput,
+    animateCbcOutput,
     animateAppear
 } from "./setAnimations.js"
 import {
@@ -31,9 +35,19 @@ window["generateRandomIv"] = generateRandomIv
 const timeout = 1000;
 const animator = new Animator(
     {
-        name: "mixColumns",
-        callback: animateMixColumns,
-        timeout: timeout
+        name: "addRoundKey",
+        callback: animateAddRoundKey,
+        timeout: timeout * 2
+    },
+    {
+        name: "subBytes",
+        callback: animateSubBytes,
+        timeout: timeout * 2
+    },
+    {
+        name: "inverseSubBytes",
+        callback: animateInverseSubBytes,
+        timeout: timeout * 2
     },
     {
         name: "shiftRows",
@@ -41,19 +55,31 @@ const animator = new Animator(
         timeout: timeout
     },
     {
-        name: "subBytes",
-        callback: animateSubBytes,
+        name: "inverseShiftRows",
+        callback: animateInverseShiftRows,
         timeout: timeout
     },
     {
-        name: "addRoundKey",
-        callback: animateAddRoundKey,
-        timeout: timeout * 2
-    }, {
+        name: "mixColumns",
+        callback: animateMixColumns,
+        timeout: timeout
+    },
+    {
+        name: "inverseMixColumns",
+        callback: animateInverseMixColumns,
+        timeout: timeout
+    },
+    {
         name: "cbcInput",
         callback: animateCbcInput,
         timeout: timeout * 2
-    }, {
+    },
+    {
+        name: "cbcOutput",
+        callback: animateCbcOutput,
+        timeout: timeout
+    },
+    {
         name: "appear",
         callback: animateAppear,
         timeout: timeout
@@ -95,6 +121,7 @@ async function calculate() {
     if (p === "encrypt") {
         output.textContent = await aes.encrypt(m, k, v)
     } else if (p === "decrypt") {
+        await animator.play("cbcOutput", [...atob(m)].map(x => x.charCodeAt(0)).slice(0, size), 0)
         output.textContent = await aes.decrypt(m, k, v)
     }
 }

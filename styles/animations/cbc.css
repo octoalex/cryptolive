@@ -4,7 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-@keyframes cbc {
+@keyframes cbcInput {
 	0%, 50%, 100% {
 		opacity: 100%;
 	}
@@ -13,6 +13,19 @@
 	}
 }
 
+@keyframes cbcOutput {
+	0%, 100% {
+		opacity: 100%;
+	}
+	50% {
+		opacity: 0%;
+	}
+}
+
 table.animate-cbcInput > tbody > tr > td > span {
-	animation: cbc 2s ease-in-out 1 forwards;
+	animation: cbcInput 2s ease-in-out 1 forwards;
+}
+
+table.animate-cbcOutput > tbody > tr > td > span {
+	animation: cbcOutput 1s ease-in-out 1 forwards;
 }

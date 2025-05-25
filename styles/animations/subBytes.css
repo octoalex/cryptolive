@@ -14,5 +14,5 @@
 }
 
 table.animate-subBytes > tbody > tr > td > span {
-	animation: subBytes 1s ease-in-out 1 forwards;
+	animation: subBytes 2s ease-in-out 1 forwards;
 }

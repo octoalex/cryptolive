@@ -8,73 +8,19 @@ import {setTable, setTableBy, Tables, tablesBox} from "./tables.js";
 import {size} from "/js/lib/aes/core.js";
 
 export {
-	animateMixColumns,
-	animateShiftRows,
-	animateSubBytes,
 	animateAddRoundKey,
+	animateSubBytes,
+	animateInverseSubBytes,
+	animateShiftRows,
+	animateInverseShiftRows,
+	animateMixColumns,
+	animateInverseMixColumns,
 	animateCbcInput,
+	animateCbcOutput,
 	animateAppear
 }
 
 const stepName = document.getElementById("step-name")
-
-function animateMixColumns(state, offset) {
-	const name = "animate-mixColumns"
-	stepName.textContent = "Mix Columns"
-	Tables.main.classList.add(name)
-	setTimeout(
-		() => {
-			setTable(Tables.main, state, offset * size)
-		}, 500
-	)
-	setTimeout(
-		() => {
-			Tables.main.classList.remove(name)
-		}, 1000
-	)
-}
-
-function animateShiftRows(state, offset) {
-	const name = "animate-shiftRows"
-	stepName.textContent = "Shift Rows"
-	Tables.main.classList.add(name)
-	Tables.borrow.classList.add(name)
-	setTimeout(
-		() => {
-			setTable(Tables.main, state, offset * size)
-			Tables.main.classList.remove(name)
-			Tables.borrow.classList.remove(name)
-		}, 1000
-	)
-}
-
-function animateSubBytes(state, offset) {
-	const name = "animate-subBytes"
-	stepName.textContent = "Sub Bytes"
-	Tables.main.classList.add(name)
-	setTimeout(
-		() => {
-			setTableBy(Tables.main, (i, j, element) => {
-				const sub = document.createElement("sub")
-				const text = element.textContent
-				sub.textContent = `(${text})`
-				sub.classList.add("sbox-mini")
-				element.textContent = "S"
-				element.appendChild(sub)
-			})
-		}, 250
-	)
-	setTimeout(
-		() => {
-			setTable(Tables.main, state, offset * size)
-			// subBytes is always and only the step preceding shiftRows, so the borrow table's data is set here
-			setTable(Tables.borrow, state, offset * size)
-		}, 750
-	)
-	setTimeout(() => {
-		Tables.main.classList.remove(name)
-	}, 1000)
-}
 
 function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 	const name = "animate-addRoundKey"
@@ -103,6 +49,121 @@ function animateAddRoundKey(state, roundKeys, offset, keyOffset) {
 
 }
 
+function animateSubBytes(state, offset) {
+	const name = "animate-subBytes"
+	stepName.textContent = "Sub Bytes"
+	Tables.main.classList.add(name)
+	setTimeout(
+		() => {
+			setTableBy(Tables.main, (i, j, element) => {
+				const sub = document.createElement("sub")
+				const text = element.textContent
+				sub.textContent = `(${text})`
+				sub.classList.add("sbox-mini")
+				element.textContent = "S"
+				element.appendChild(sub)
+			})
+		}, 500
+	)
+	setTimeout(
+		() => {
+			setTable(Tables.main, state, offset * size)
+			// subBytes is always and only the step preceding shiftRows, so the borrow table's data is set here
+			setTable(Tables.borrow, state, offset * size)
+		}, 1500
+	)
+	setTimeout(() => {
+		Tables.main.classList.remove(name)
+	}, 2000)
+}
+
+function animateInverseSubBytes(state, offset) {
+	const name = "animate-subBytes"
+	stepName.textContent = "Inverse Sub Bytes"
+	Tables.main.classList.add(name)
+	setTimeout(
+		() => {
+			setTableBy(Tables.main, (i, j, element) => {
+				const sub = document.createElement("sub")
+				const text = element.textContent
+				sub.textContent = `(${text})`
+				sub.classList.add("sbox-mini")
+				element.textContent = "I"
+				element.appendChild(sub)
+			})
+		}, 500
+	)
+	setTimeout(
+		() => {
+			setTable(Tables.main, state, offset * size)
+		}, 1500
+	)
+	setTimeout(() => {
+		Tables.main.classList.remove(name)
+	}, 2000)
+}
+
+function animateShiftRows(state, offset) {
+	const name = "animate-shiftRows"
+	stepName.textContent = "Shift Rows"
+	Tables.main.classList.add(name)
+	Tables.borrow.classList.add(name)
+	setTimeout(
+		() => {
+			setTable(Tables.main, state, offset * size)
+			Tables.main.classList.remove(name)
+			Tables.borrow.classList.remove(name)
+		}, 1000
+	)
+}
+
+function animateInverseShiftRows(state, offset) {
+	const name = "animate-inverseShiftRows"
+	stepName.textContent = "Inverse Shift Rows"
+	Tables.main.classList.add(name)
+	Tables.borrow.classList.add(name)
+	setTable(Tables.main, state, offset * size)
+	setTable(Tables.borrow, state, offset * size)
+	setTimeout(
+		() => {
+			Tables.main.classList.remove(name)
+			Tables.borrow.classList.remove(name)
+		}, 1000
+	)
+}
+
+function animateMixColumns(state, offset) {
+	const name = "animate-mixColumns"
+	stepName.textContent = "Mix Columns"
+	Tables.main.classList.add(name)
+	setTimeout(
+		() => {
+			setTable(Tables.main, state, offset * size)
+		}, 500
+	)
+	setTimeout(
+		() => {
+			Tables.main.classList.remove(name)
+		}, 1000
+	)
+}
+
+function animateInverseMixColumns(state, offset) {
+	const name = "animate-mixColumns"
+	stepName.textContent = "Inverse Mix Columns"
+	Tables.main.classList.add(name)
+	setTimeout(
+		() => {
+			setTable(Tables.main, state, offset * size)
+		}, 500
+	)
+	setTimeout(
+		() => {
+			Tables.main.classList.remove(name)
+		}, 1000
+	)
+}
+
 function animateCbcInput(data, active, offset) {
 	const name = "animate-cbcInput"
 	stepName.textContent = "CBC Encrypt Next Block"
@@ -122,6 +183,19 @@ function animateCbcInput(data, active, offset) {
 	setTimeout(() => {
 		Tables.main.classList.remove(name)
 	}, 2000)
+
+}
+
+function animateCbcOutput(data, offset) {
+	const name = "animate-cbcOutput"
+	stepName.textContent = "CBC Decrypt Next Block"
+	Tables.main.classList.add(name)
+	setTimeout(() => {
+		setTable(Tables.main, data, offset)
+	}, 500)
+	setTimeout(() => {
+		Tables.main.classList.remove(name)
+	}, 1000)
 
 }
 
