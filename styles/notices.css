@@ -1,0 +1,13 @@
+.wrapper {
+	padding-top: 128px;
+}
+
+.notice {
+	padding: 32px;
+	width: 1024px;
+	margin: 32px auto;
+}
+
+h3 {
+	margin: 0;
+}

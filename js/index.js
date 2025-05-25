@@ -83,13 +83,13 @@ async function calculate() {
         keyLabel.textContent = text.slice(0, 22) + "\n" + text.slice(22, 44)
     });
 
-    const cbc = new AnimatedCBC(animator)
     const aes = new AnimatedAes(animator,
         d === "cbc" ? new AnimatedCBC(animator) :
             // d === "ecb" ? new AnimatedECB(animator) :
                 undefined
         )
 
+    output.scrollIntoView()
     await animator.play("appear")
 
     if (p === "encrypt") {

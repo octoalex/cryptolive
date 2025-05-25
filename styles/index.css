@@ -8,6 +8,19 @@ tr {
 	position: relative;
 }
 
+td {
+	transition:
+		background-color 250ms ease,
+		border-color 250ms ease,
+		color 250ms ease;
+}
+
+td:hover {
+	background-color: whitesmoke;
+	border-color: darkslateblue;
+	color: darkslateblue;
+}
+
 table.main > tbody {
 	clip-path: inset(0 0 0 -2px);
 }
@@ -15,7 +28,7 @@ table.main > tbody {
 #table-box {
 	display: flex;
 	width: 298px;
-	margin: auto;
+	margin: 64px auto 0 auto;
 	position: relative;
 }
 
@@ -26,6 +39,7 @@ table.borrow {
 	position: absolute;
 	left: 288px;
 	width: 282px;
+	background-color: transparent;
 }
 
 table.key {
@@ -83,41 +97,17 @@ p#step-name {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-.entry {
-	display: flex;
-	flex-direction: row;
-	width: 298px;
-	position: relative;
-}
-
-.entry > label {
-	position: absolute;
-	right: 306px;
-	white-space: nowrap;
-	height: 100%;
-	align-content: center;
-}
-
-.entry > *:not(label) {
-	width: 298px;
-	margin: 4px;
-}
-
-label {
-	text-align: right;
-}
-
-textarea {
-	font-size: 10pt;
+	margin: auto;
+	width: 768px;
+	margin-top: 160px;
 }
 
 #process,
 #calculate {
-	width: 150px;
+	width: 192px;
 	margin: 16px;
 	padding: 8px;
+	font-size: 16pt;
 }
 
 button.random-iv {
@@ -135,6 +125,9 @@ button.random-iv {
 	flex-direction: row;
 	position: relative;
 	margin-top: 32px;
+	margin-bottom: 32px;
+
+	padding: 16px;
 }
 
 #output {
@@ -147,7 +140,7 @@ button.random-iv {
 
 .results > p:not(#output) {
 	position: absolute;
-	left: 0;
+	left: 16px;
 	top: 0;
 	margin: 0;
 	height: 100%;
